@@ -1,10 +1,12 @@
 import User from "../models/user.model.js";
 import bcryptjs from 'bcryptjs';
 import { errorHandler } from "../utils/error.js";
+import bodyParser from 'body-parser';
 
 export const signup=async(req,res,next)=>{
-    const {username,email,password}=req.body;
 
+    const {username,email,password}=req.body;
+    console.log(req.body);
     if(!username || !email || !password || username==='' || email==='' || password===''){
        next(errorHandler(400,'All fields are required'));
     }
@@ -23,7 +25,6 @@ export const signup=async(req,res,next)=>{
 
     }catch(error){
        next(error)
-
     }
 
     
