@@ -23,9 +23,9 @@ export const updateUser=async (req,res,next)=>{
             return next(errorHandler(400, "username must be between 7 and 20 charecters"))
         }
     }
-    if(req.body.username.includes(" ")){
-        return next(errorHandler(400, "username cannot contain spaces"));
-    }
+    // if(req.body.username.includes(" ")){
+    //     return next(errorHandler(400, "username cannot contain spaces"));
+    // }
     if(req.body.username!==req.body.username.toLowerCase()){
         return next(errorHandler(400, "username must be lowercase"));
     }
@@ -48,9 +48,7 @@ export const updateUser=async (req,res,next)=>{
     }catch(error){
         next(error);
     }
-
-
-}
+};
 
 export const deleteUser=async(req,res,next)=>{
     if(req.user.id !==req.params.userId){
@@ -64,4 +62,13 @@ export const deleteUser=async(req,res,next)=>{
         next(error)
     }
 
+}
+
+export const signout=async(req,res,next)=>{
+    try{
+        res.clearCookie('access_token').status(200).json("User has been signed out");
+
+    }catch(error){
+            next(error)
+    }
 }

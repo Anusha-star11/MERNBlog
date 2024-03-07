@@ -6,7 +6,7 @@ import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/st
 import { app } from "../firebase";
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { updateStart,updateFailure,updateSuccess,deleteUserFailure,deleteUserStart,deleteUserSuccess } from "../redux/user/userSlice";
+import { updateStart,updateFailure,updateSuccess,deleteUserFailure,deleteUserStart,deleteUserSuccess,signoutSuccess } from "../redux/user/userSlice";
 
 
 
@@ -77,11 +77,11 @@ export default function DashProfile() {
           })
         }
       )
-    }
+    };
 
     const handleChange=(e)=>{
       setFormData({...formData, [e.target.id]:e.target.value});
-    }
+    };
    
 
     const handleSubmit=async (e)=>{
@@ -120,8 +120,7 @@ export default function DashProfile() {
 
       }
       
-     
-    }
+    };
 
     const handleDeleteAccount=async()=>{
       setShowModal(false)
@@ -143,9 +142,27 @@ export default function DashProfile() {
 
     };
 
+    const handleSignout=async()=>{
+      try{
+        const res=await fetch('/api/user/signout', {
+          method:"POST",
+        })
+        const data=await res.json();
+        if(!res.ok){
+          console.log(data.message);
+        }else{
+            dispatch(signoutSuccess());
+        }
+
+      }catch(error){
+        console.log(error.message);
+      }
+
+    };
+
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
-        <h1 className="my-7 text-center font-semibold text=3xl">Profile</h1>
+        <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input type="file" accept="image/*" onChange={handleImageChange} ref={filePickerRef} hidden/>
         <div className="relative w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full" onClick={()=>filePickerRef.current.click()}>
@@ -180,7 +197,7 @@ export default function DashProfile() {
         <div className="text-red-500 flex justify-between mt-4">
           
           <span onClick={()=>setShowModal(true)}>Delete account</span>
-          <span>Sign Out</span>
+          <span onClick={handleSignout}>Sign Out</span>
         </div>
         {updateUserSuccess && 
         <Alert color="success" mt-5>
