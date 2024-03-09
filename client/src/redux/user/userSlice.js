@@ -28,8 +28,8 @@ const userSlice=createSlice({
             state.error=null;
         },
         updateSuccess:(state,action)=>{
-            state.loading=false;
             state.currentUser=action.payload;
+            state.loading=false;
             state.error=null;
         },
         updateFailure:(state,action)=>{
