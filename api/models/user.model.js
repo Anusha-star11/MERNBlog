@@ -22,9 +22,10 @@ const userSchema=new mongoose.Schema({
     },
     isAdmin:{
         type:Boolean,
-        deafault:false,
-    }
-},{timestamps:true}
+        default:false,
+    },
+},
+{timestamps:true}
 );
 
 const User=mongoose.model('User', userSchema);

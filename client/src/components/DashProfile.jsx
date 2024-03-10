@@ -22,6 +22,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
+import CreatePost from '../Pages/CreatePost';
 
 export default function DashProfile() {
   const { currentUser, error, loading } = useSelector((state) => state.user);
@@ -238,21 +239,17 @@ export default function DashProfile() {
           type='submit'
           gradientDuoTone='purpleToBlue'
           outline
-          disabled={loading || imageFileUploading}
+         disabled={loading || imageFileUploading}
         >
-          {loading ? 'Loading...' : 'Update'}
+         {loading ? 'Loading...' : 'Update'}
         </Button>
-        {currentUser.isAdmin && (
-          <Link to={'/create-post'}>
-            <Button
-              type='button'
-              gradientDuoTone='purpleToPink'
-              className='w-full'
-            >
-              Create a post
-            </Button>
-          </Link>
-        )}
+       {currentUser.isAdmin && 
+       <Link to={'/create-post'}>
+       <Button type="button" className='w-full' gradientDuoTone='purpleToPink'>
+        Create a post
+       </Button>
+       </Link>
+       }
       </form>
       <div className='text-red-500 flex justify-between mt-5'>
         <span onClick={() => setShowModal(true)} className='cursor-pointer'>
