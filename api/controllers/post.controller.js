@@ -21,7 +21,7 @@ export const createpost=async(req,res,next)=>{
     }catch(error){
         next(error);
     }
-}
+};
 
 export const getposts=async(req,res,next)=>{
     try{
@@ -46,10 +46,10 @@ export const getposts=async(req,res,next)=>{
 
         const totalPosts=await Post.countDocuments();
 
-        const now=new date();
+        const now=new Date();
 
         const oneMonthAgo=new Date(
-            now.getFullyear(),
+            now.getFullYear(),
             now.getMonth()-1,
             now.getDate()
         );
