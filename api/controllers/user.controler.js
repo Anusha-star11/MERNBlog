@@ -74,7 +74,10 @@ export const signout=async(req,res,next)=>{
     }
 }
 
-export const getusers=async(req,res,next)=>{
+export const getUsers=async(req,res,next)=>{
+    if(!req.user.isAdmin){
+        return next(errorHandler(403, "You are not allowed to see all users"))
+    }
     try{
         const startIndex=parseInt(req.query.startIndex) || 0;
         const limit=parseInt(req.query.limit) || 9;
@@ -90,7 +93,7 @@ export const getusers=async(req,res,next)=>{
             return rest;
         });
 
-        const totalUsers=User.countDocuments();
+        const totalUsers=await User.countDocuments();
 
         const now=new Date();
 
