@@ -9,3 +9,13 @@ body{
 .ql-editor{
     font-size: 1.05rem;
 }
+
+.post-content p{
+    margin-bottom:0.5rem;
+    font-family: "Roboto";
+}
+
+.post-content h2{
+    font-size:1.5rem;
+    margin:1.5rem 0;
+}
