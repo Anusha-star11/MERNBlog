@@ -10,7 +10,7 @@ export default function DashUsers() {
   const [users,setUsers]=useState([])
   const [showMore, setShowMore]=useState(true);
   const [showModal,setShowModal]=useState(false);
-  const [postIdToDelete,setPostIdToDelete]=useState("");
+  const [userIdToDelete,setUserIdToDelete]=useState("");
   useEffect(()=>{
     const fetchUsers=async()=>{
       try{
@@ -51,10 +51,10 @@ export default function DashUsers() {
     }
   }
 
-  const handleDeletePost=async()=>{
+  const handleDeleteUser=async()=>{
     setShowModal(false)
     try{
-      const res=await fetch(`/api/post/deletepost/${postIdToDelete}/${currentUser._id}`, 
+      const res=await fetch(`/api/user/delete/${userIdToDelete}`, 
       {
         method:"DELETE",
       });
@@ -62,7 +62,7 @@ export default function DashUsers() {
       if(!res.ok){
         console.log(data.message);
       }else{
-        setUsers((prev)=>prev.filter((post)=>post._id!==postIdToDelete));
+        setUsers((prev)=>prev.filter((user)=>user._id!==userIdToDelete));
       }
 
     }catch(error){
@@ -83,7 +83,7 @@ export default function DashUsers() {
             <Table.HeadCell>Delete</Table.HeadCell>
           </Table.Head>
           {users.map((user)=>(
-            <Table.Body className='divide-y'>
+            <Table.Body className='divide-y' key={user._id}>
               <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                 <Table.Cell>{new Date(user.createdAt).toLocaleDateString()}</Table.Cell>
                 <Table.Cell>
@@ -92,7 +92,7 @@ export default function DashUsers() {
                 <Table.Cell>{user.username}</Table.Cell>
                 <Table.Cell>{user.email}</Table.Cell>
                 <Table.Cell>{user.isAdmin ? (<FaCheck className="text-green-500"/>) : (<FaTimes className="text-red-500"/>)}</Table.Cell>
-                <Table.Cell><span onClick={()=>{setShowModal(true);setPostIdToDelete(post._id)}}className="font-medium text-red-500 hover:underline cursor-pointer" >Delete</span></Table.Cell>
+                <Table.Cell><span onClick={()=>{setShowModal(true);setUserIdToDelete(user._id)}}className="font-medium text-red-500 hover:underline cursor-pointer" >Delete</span></Table.Cell>
               </Table.Row>
             </Table.Body>
           ))}
@@ -117,7 +117,7 @@ export default function DashUsers() {
               Are you sure you want to delete this user?
             </h3>
             <div className='flex justify-center gap-4'>
-              <Button color='failure' onClick={handleDeletePost}>
+              <Button color='failure' onClick={handleDeleteUser}>
                 Yes, I'm sure
               </Button>
               <Button color='gray' onClick={() => setShowModal(false)}>
