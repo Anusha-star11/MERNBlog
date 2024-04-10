@@ -1,6 +1,7 @@
 import { Button, Select, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useLocation,useNavigate } from "react-router-dom";
+import { IoIosClose } from "react-icons/io";
 import PostCard from '../components/PostCard';
 
 
@@ -59,6 +60,7 @@ export default function Search() {
 
   const handleSubmit=(e)=>{
     e.preventDefault()
+    setSideBarData({...sideBarData, searchTerm: "",category:"uncategorized"})
     const urlParams=new URLSearchParams(location.search)
     urlParams.set('searchTerm', sideBarData.searchTerm);
     urlParams.set('sort', sideBarData.sort);
@@ -87,10 +89,17 @@ export default function Search() {
     }
 
   }
+
+  const handleCloseClick=()=>{
+    navigate('/')
+  }
   return (
     <div className="flex flex-col md:flex-row">
       <div className="p-7 border-b md:border-r md:min-h-screen border-gray-500">
         <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
+          <div className="flex justify-end">
+        <Button className="lg:hidden h-5 w-6" onClick={handleCloseClick}><IoIosClose /></Button>
+        </div>
           <div className="flex flex-row gap-2 items-center ">
             <label className="font-semibold whitespace-nowrap">Search Term</label>
             <TextInput placeholder="Search..." type="text" id="searchTerm" value={sideBarData.searchTerm} onChange={handleChange}/>

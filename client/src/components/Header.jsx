@@ -12,7 +12,6 @@ export default function Header() {
   const {currentUser}=useSelector(state=>state.user)
   const {theme}=useSelector((state)=>state.theme)
   const [searchTerm,setSearchTerm]=useState("")
-  const [showSearchInput,setShowSearchInput]=useState(false)
   const dispatch=useDispatch();
   const location=useLocation();
   const navigate=useNavigate();
@@ -46,6 +45,7 @@ export default function Header() {
   };
   const handleSubmit=(e)=>{
     e.preventDefault()
+    setSearchTerm("")
     const urlParams=new URLSearchParams(location.search)
     urlParams.set("searchTerm", searchTerm)
     const searchQuery=urlParams.toString()
@@ -62,7 +62,7 @@ export default function Header() {
         </Link>
         <form onSubmit={handleSubmit}>
             <TextInput value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)} type="text" placeholder="Search..." rightIcon={AiOutlineSearch} className="hidden lg:inline"/>
-            <Button className="w-12 h-10 lg:hidden" color='gray' pill onClick={()=>setShowSearchInput(true)} type="submit">
+            <Button className="w-12 h-10 lg:hidden" color='gray' pill type="submit">
           <AiOutlineSearch/>
         </Button>
         </form>
