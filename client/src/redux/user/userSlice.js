@@ -33,16 +33,17 @@ const userSlice=createSlice({
             state.error=null;
         },
         updateFailure:(state,action)=>{
-            state.error=action.payload;
             state.loading=false;
+            state.error=action.payload;
+            
         },
         deleteUserStart:(state)=>{
             state.loading=true;
-            state.error=false;
+            state.error=null;
         },
         deleteUserSuccess:(state)=>{
             state.loading=false;
-            state.error=false;
+            state.error=null;
             state.currentUser=null;
         },
         deleteUserFailure :(state,action)=>{
